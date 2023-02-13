@@ -1,6 +1,7 @@
 from flask import Flask, request, render_template
+from quizmaker import app
 
-app = Flask(__name__)
+# app = Flask(__name__)
 
 @app.route("/")
 def home():
