@@ -11,9 +11,9 @@ set -x
 
 flask --app quizmaker --debug run --host 0.0.0.0 --port 8000
 
-# if ls var/insta485.sqlite3; then
-#   flask --app insta485 --debug run --host 0.0.0.0 --port 8000
+# if ls var/quiz-maker.sqlite3; then
+#   flask --app quiz-maker --debug run --host 0.0.0.0 --port 8000
 # else
-#   echo "Try: ./bin/insta485db create"
+#   echo "Try: ./bin/quiz-maker create"
 #   exit 1
 # fi
