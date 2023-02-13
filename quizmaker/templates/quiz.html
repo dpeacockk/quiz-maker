@@ -1,0 +1,26 @@
+<!-- survey.html -->
+<h1>{{ survey_title }}</h1>
+<form action="{{ url_for('answer') }}" method="post">
+    {% for question in questions %}
+        <p>{{ question.question_text }}</p>
+        {% if question.question_type == 'free_response' %}
+            <p>
+                <textarea name="{{ question.id }}"></textarea>
+            </p>
+        {% elif question.question_type == 'true_false' %}
+            <p>
+                <input type="radio" name="{{ question.id }}" value="True">True
+                <input type="radio" name="{{ question.id }}" value="False">False
+            </p>
+        {% elif question.question_type == 'multiple_choice' %}
+            {% for choice in question.choices %}
+                <p>
+                    <input type="radio" name="{{ question.id }}" value="{{ choice }}">{{ choice }}
+                </p>
+            {% endfor %}
+        {% endif %}
+    {% endfor %}
+    <p>
+        <input type="submit" value="Submit">
+    </p>
+</form>

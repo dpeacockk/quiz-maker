@@ -1,0 +1,17 @@
+<!-- results.html -->
+<h1>{{ survey_title }} Results</h1>
+{% for question in questions %}
+    <p>{{ question.question_text }}</p>
+    {% if question.question_type == 'free_response' %}
+        {% for answer in question.answers %}
+            <p>{{ answer }}</p>
+        {% endfor %}
+    {% elif question.question_type == 'true_false' %}
+        <p>True: {{ question.answers.count("True") }}</p>
+        <p>False: {{ question.answers.count("False") }}</p>
+    {% elif question.question_type == 'multiple_choice' %}
+        {% for choice in question.choices %}
+            <p>{{ choice }}: {{ question.answers.count(choice) }}</p>
+        {% endfor %}
+    {% endif %}
+{% endfor %}

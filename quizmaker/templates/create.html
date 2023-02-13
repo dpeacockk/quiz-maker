@@ -1,0 +1,47 @@
+<!-- create.html -->
+<h1>Create a Survey</h1>
+<form action="{{ url_for('create') }}" method="post">
+    <p>
+        <label for="question_text">Question Text:</label>
+        <input type="text" name="question_text">
+    </p>
+    <p>
+        <label for="question_type">Question Type:</label>
+        <select name="question_type">
+            <option value="free_response">Free Response</option>
+            <option value="true_false">True/False</option>
+            <option value="multiple_choice">Multiple Choice</option>
+        </select>
+    </p>
+    <div id="choices" style="display: none;">
+        <p>
+            <label for="choice">Choice:</label>
+            <input type="text" name="choice">
+        </p>
+        <p>
+            <input type="button" value="Add Choice" onclick="addChoice()">
+        </p>
+    </div>
+    <script>
+        function addChoice() {
+            const choices = document.getElementById("choices");
+            const choice = document.createElement("p");
+            choice.innerHTML = `
+                <label for="choice">Choice:</label>
+                <input type="text" name="choice">
+            `;
+            choices.appendChild(choice);
+        }
+        document.querySelector("select[name=question_type]").addEventListener("change", function(event) {
+            const questionType = event.target.value;
+            if (questionType === "multiple_choice") {
+                document.getElementById("choices").style.display = "block";
+            } else {
+                document.getElementById("choices").style.display = "none";
+            }
+        });
+    </script>
+    <p>
+        <input type="submit" value="Create Survey">
+    </p>
+</form>
