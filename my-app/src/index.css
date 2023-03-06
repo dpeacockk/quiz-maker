@@ -1,0 +1,28 @@
+body {
+  background-color: rgb(233, 250, 252);
+}
+
+.title {
+  padding: 10px;
+  text-align: center;
+  color: rgb(35, 35, 48);
+  font-family: Georgia, serif;
+  font-size: 30px;
+}
+
+.quiz-title-wrapper {
+  text-align: center;
+}
+
+.quiz-header-input {
+  padding: 5px;
+  margin: 10px;
+}
+
+.quiz-divider {
+  border: 2px solid rgb(35, 35, 48);
+}
+
+.quiz-content-wrapper {
+  padding: 30px;
+}
