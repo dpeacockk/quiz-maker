@@ -2,6 +2,7 @@ body {
   background-color: rgb(233, 250, 252);
 }
 
+/* Title and info section */
 .title {
   padding: 10px;
   text-align: center;
@@ -23,6 +24,67 @@ body {
   border: 2px solid rgb(35, 35, 48);
 }
 
+.button-space {
+  width:15px;
+  height:auto;
+  display:inline-block;
+}
+
 .quiz-content-wrapper {
-  padding: 30px;
+  padding: 25px;
+  margin-left: 10px;
+}
+
+.quiz-add-questions-wrapper {
+  color: rgb(35, 35, 48);
+  font-family: Georgia, serif;  
+  line-height: 35px;
+}
+
+.quiz-questions-wrapper {
+  margin: 10px;
+}
+
+
+/* MCQ */
+.quiz-mcq-wrapper{
+  color: rgb(35, 35, 48);
+  font-family: Georgia, serif;
+  line-height: 35px;
+}
+
+.mcq-header {
+  margin-bottom: -10px;
+}
+
+
+/* FRQ */
+.frq-defining-title {
+  color: rgb(35, 35, 48);
+  font-family: Georgia, serif;
+  line-height: 35px;
+}
+
+.frq-header {
+  margin-bottom: 0px;
+}
+
+.frq-wrapper {
+  color: rgb(35, 35, 48);
+  font-family: Georgia, serif;
+  line-height: 30px;
+}
+
+
+/* MCMA */
+.mcma-header {
+  margin-bottom: -10px;
+}
+
+
+
+/* export */
+
+.to-pdf-button {
+  margin-left: 35px;
 }
