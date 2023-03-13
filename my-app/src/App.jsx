@@ -7,6 +7,7 @@ import MCMA from './MCMA';
 function App() {
 
   const [quiz_questions, setQuestions] = useState([]);
+  const [curr_id, setCurrID] = useState(0);
   const [quiz_name, setQuizName] = useState("");
   const [class_name, setClassName] = useState("");
   const [teacher_name, setTeacherName] = useState("");
@@ -14,6 +15,8 @@ function App() {
   function add_Q(type) {
     let info = {};
     info['type'] = type;
+    info['id'] = curr_id;
+    setCurrID(curr_id+1);
 
     let oldArr = quiz_questions.slice();
     oldArr.push(info);
@@ -34,22 +37,22 @@ function App() {
         <div className="quiz-questions-wrapper">
           {quiz_questions.map((elem, key) => {
             if (elem['type'] === "MCQ") {
-              return <MCQ keyy={key} />;
+              return <MCQ key={elem['id']} />;
             }
             else if (elem['type'] === "FRQ"){
-              return <FRQ keyy={key} />;
+              return <FRQ key={elem['id']} />;
             }
             else if (elem['type'] === "MCMA"){
-              return <MCMA keyy={key} />;
+              return <MCMA key={elem['id']} />;
             }
           })}
         </div>
 
         <div className="quiz-add-questions-wrapper">
           <button onClick={() => add_Q("MCQ")} className="add-question-button"> Add MCQ</button>
-          <div class="button-space"/>
+          <div className="button-space"/>
           <button onClick={() => add_Q("FRQ")} className="add-question-button"> Add FRQ</button>
-          <div class="button-space"/>
+          <div className="button-space"/>
           <button onClick={() => add_Q("MCMA")} className="add-question-button"> Add MCMA</button>
         </div>
       </div>
@@ -64,6 +67,7 @@ function App() {
           <input className="quiz-header-input" placeholder="Enter class name..."></input>
           <input className="quiz-header-input" placeholder="Enter teacher name..."></input>
         </form>
+        <ImportantNote />
         <hr className="quiz-divider" />
       </div>
     );
@@ -72,8 +76,16 @@ function App() {
   function PDFThing() {
       return (
         <button className='to-pdf-button'> Convert Quiz to PDF!</button>
-      )
+      );
   }// PDFThing()
+
+  function ImportantNote(){
+    return(
+      <textarea className="important-note"
+             placeholder="Enter note for quiz..."
+      />
+    );
+  }//importantNote()
 
   return (
     <div>
