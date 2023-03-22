@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import './index.css';
 
-export default function MCMA() {
+export default function MCMA(id) {
 
     return (
         <div className="quiz-mcq-wrapper">

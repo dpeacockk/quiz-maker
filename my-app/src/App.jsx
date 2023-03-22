@@ -8,18 +8,62 @@ function App() {
 
   const [quiz_questions, setQuestions] = useState([]);
   const [curr_id, setCurrID] = useState(0);
+  // Header Values
   const [quiz_name, setQuizName] = useState("");
   const [class_name, setClassName] = useState("");
   const [teacher_name, setTeacherName] = useState("");
+  const [quiz_notes, setQuizNotes] = useState("");
 
+  
+  function SaveInputVals(){
+    // Saving Headers
+    setQuizName(document.getElementById("qName").value);
+    setClassName(document.getElementById("cName").value);
+    setTeacherName(document.getElementById("tName").value);
+    setQuizNotes(document.getElementById("qNotes").value);
+    
+    // Saving Quiz Question Values
+    quiz_questions.map((elem, key) => {
+      if(elem['type'] === 'MCQ'){
+        SaveMCQ(elem);
+      } else if (elem['type'] === 'FRQ'){
+        SaveFRQ(elem);
+      } else if (elem['type'] ==='MCMA') {
+        SaveMCMA(elem);
+      }
+    })
+
+  }//SaveInputVals()
+
+
+  function SaveMCQ(elem){
+    elem.contents = {
+      "q":document.getElementById(`${elem['id']}question`).value,
+      "points":0,
+      "A":0,
+      "B":0,
+      "C":0,
+      "D":0,                    
+    }
+  }//SaveFRQ
+
+  function SaveFRQ(elem){
+    
+  }//SaveFRQ
+
+  function SaveMCMA(elem){
+    
+  }//SaveMCMA
 
 
   function add_Q(type) {
+    SaveInputVals();
     let info = {};
     info['type'] = type;
     info['id'] = curr_id;
     info['obj'] = getObject(type, curr_id);
     setCurrID(curr_id+1);
+    info['contents'] = setDefContent(type)
 
     let oldArr = quiz_questions.slice();
     oldArr.push(info);
@@ -29,16 +73,28 @@ function App() {
 
   function getObject(type, id){
     if (type === "MCQ") {
-      return <MCQ key={id} uniqueKey={id}/>;
+      return <MCQ key={id} uniqueKey={id} id={id}/>;
     }
     else if (type === "FRQ"){
-      return <FRQ key={id} uniqueKey={id}/>;
+      return <FRQ key={id} uniqueKey={id} id={id}/>;
     }
     else if (type === "MCMA"){
-      return <MCMA key={id} uniqueKey={id}/>;
+      return <MCMA key={id} uniqueKey={id} id={id}/>;
     }
   }
 
+  function setDefContent(type){
+    if (type === "MCQ"){
+      return {
+        "q":"0",
+        "points":0,
+        "A":0,
+        "B":0,
+        "C":0,
+        "D":0}
+    }
+    return {}
+  }
   function QuizContent() {
     return (
       /*
@@ -52,16 +108,15 @@ function App() {
       <div className="quiz-content-wrapper">
         <div className="quiz-questions-wrapper">
           {quiz_questions.map((elem, key) => {
-            // if (elem['type'] === "MCQ") {
-            //   return <MCQ key={elem['id']} />;
-            // }
-            // else if (elem['type'] === "FRQ"){
-            //   return <FRQ key={elem['id']} />;
-            // }
-            // else if (elem['type'] === "MCMA"){
-            //   return <MCMA key={elem['id']} />;
-            // }
-            return elem['obj'];
+            if (elem['type'] === "MCQ") {
+              return <MCQ key={elem['id']} id={elem['id']} content={elem['content']}/>;
+            }
+            else if (elem['type'] === "FRQ"){
+              return <FRQ key={elem['id']} />;
+            }
+            else if (elem['type'] === "MCMA"){
+              return <MCMA key={elem['id']} />;
+            }
           })}
         </div>
 
@@ -80,15 +135,16 @@ function App() {
     return (
       <div className="quiz-title-wrapper">
         <form action="">
-          <input className="quiz-header-input" placeholder="Enter quiz name..."></input>
-          <input className="quiz-header-input" placeholder="Enter class name..."></input>
-          <input className="quiz-header-input" placeholder="Enter teacher name..." value={teacher_name} onChange={(e)=>setTeacherName(e.target.value)}></input>
+          <input id="qName" className="quiz-header-input" placeholder="Enter quiz name..." defaultValue={quiz_name}></input>
+          <input id="tName" className="quiz-header-input" placeholder="Enter class name..." defaultValue={class_name}></input>
+          <input id="cName" className="quiz-header-input" placeholder="Enter teacher name..." defaultValue={teacher_name}></input>
         </form>
         <ImportantNote />
         <hr className="quiz-divider" />
       </div>
     );
   }
+
 
   function PDFThing() {
       return (
@@ -98,8 +154,8 @@ function App() {
 
   function ImportantNote(){
     return(
-      <textarea className="important-note"
-             placeholder="Enter note for quiz..."
+      <textarea id="qNotes" className="important-note"
+             placeholder="Enter note for quiz..." defaultValue={quiz_notes}
       />
     );
   }//importantNote()
