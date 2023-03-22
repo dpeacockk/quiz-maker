@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import './index.css';
 
 export default function MCQ() {
+    const [message, setMessage] = useState( '' );
 
 
     return (
@@ -11,7 +12,7 @@ export default function MCQ() {
                 <p className='mcq-header'>Multiple Choice Question </p>
             </div>
         
-            Question: <input type="text" name="MCQ_question" ></input> &nbsp;
+            Question: <input type="text" name="MCQ_question" onKeyDown={(e) => setMessage(e.target.value)}></input> &nbsp;
             Points: <input type="text" name="points" size="4"></input> <br/>
             A. <input type="text" name="MCQ_answer_A" ></input> <br/>
             B. <input type="text" name="MCQ_answer_B" ></input> <br/>
