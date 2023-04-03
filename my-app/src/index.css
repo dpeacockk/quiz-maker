@@ -98,3 +98,11 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   padding: 10px;
 }
+
+.points-wrapper{
+  text-align: center;
+  font-family: Georgia, serif;
+  color: rgb(173, 8, 8);
+  padding: -10px;
+  font-weight: bold;
+}

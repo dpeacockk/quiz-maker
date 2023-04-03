@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import genPDF from './pdfGen';
 import './index.css';
 import FRQ from './FRQ';
@@ -14,6 +14,27 @@ function App() {
   const [class_name, setClassName] = useState("");
   const [teacher_name, setTeacherName] = useState("");
   const [quiz_notes, setQuizNotes] = useState("");
+  const [total_points, setTotalPoints] = useState(0);
+
+
+
+  ////////////////////////////
+  // useEffect(() => {
+  //   window.addEventListener("keydown", sumPoints);
+  //   return () => {
+  //     window.removeEventListener("keydown", sumPoints);
+  //   };
+  // }, [sumPoints]);
+  //////////////////
+
+  function sumPoints() {
+    let points = 0;
+    quiz_questions.map((elem, key) => {
+      points += parseFloat(document.getElementById(`${elem['id']}points`).value);
+    })
+    setTotalPoints(points);
+    //SaveInputVals();
+  }//sumPoints()
 
 
   function SaveInputVals() {
@@ -52,6 +73,9 @@ function App() {
     elem.contents = {
       "q": document.getElementById(`${elem['id']}question`).value,
       "points": document.getElementById(`${elem['id']}points`).value,
+      "short": document.getElementById(`${elem['id']}short`).checked,
+      "med": document.getElementById(`${elem['id']}med`).checked,
+      "long": document.getElementById(`${elem['id']}long`).checked
     }
     let update_arr = quiz_questions[elem['id']] = elem
     setQuestions(update_arr);
@@ -88,6 +112,7 @@ function App() {
     let oldArr = quiz_questions.slice();
     oldArr.push(info);
     setQuestions(oldArr);
+    sumPoints();
   } // add_Q()
 
 
@@ -142,7 +167,7 @@ function App() {
               return <MCQ key={elem['id']} id={elem['id']} content={elem['contents']} />;
             }
             else if (elem['type'] === "FRQ") {
-              return <FRQ key={elem['id']} id={elem['id']} content={elem['contents']} />;
+              return <FRQ key={elem['id']} id={elem['id']} content={elem['contents']} pUp={sumPoints} />;
             }
             else if (elem['type'] === "MCMA") {
               return <MCMA key={elem['id']} id={elem['id']} content={elem['contents']} />;
@@ -178,7 +203,7 @@ function App() {
 
   function PDFThing() {
     return (
-      <button className='to-pdf-button' onClick={genPDF}> Convert Quiz to PDF!</button>
+      <button className='to-pdf-button' onClick={()=>{sumPoints(); genPDF(quiz_questions, total_points);}}> Convert Quiz to PDF!</button>
     );
   }// PDFThing()
 
@@ -213,6 +238,10 @@ function App() {
       <div className="title">MDST Baddies Quizmaker</div>
 
       <QuizTitle />
+
+      <div className="points-wrapper"> 
+      <span> Total Points: </span><span id="totalPoints">{total_points}</span>
+      </div>
 
       <QuizContent />
 
