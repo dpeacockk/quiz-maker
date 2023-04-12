@@ -6,7 +6,7 @@ export default function MCQ({ id, content }) {
     // const [message, setMessage] = useState( '' );
 
     return (
-        <div className="quiz-mcq-wrapper">
+        <div className="quiz-mcq-wrapper" id={`${id}`} type="MCQ">
             <div className='mcq-defining-title'>
                 <p className='mcq-header'>Multiple Choice Question </p>
             </div>

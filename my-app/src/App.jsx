@@ -17,23 +17,12 @@ function App() {
   const [total_points, setTotalPoints] = useState(0);
 
 
-
-  ////////////////////////////
-  // useEffect(() => {
-  //   window.addEventListener("keydown", sumPoints);
-  //   return () => {
-  //     window.removeEventListener("keydown", sumPoints);
-  //   };
-  // }, [sumPoints]);
-  //////////////////
-
   function sumPoints() {
     let points = 0;
     quiz_questions.map((elem, key) => {
       points += parseFloat(document.getElementById(`${elem['id']}points`).value);
     })
     setTotalPoints(points);
-    //SaveInputVals();
   }//sumPoints()
 
 
@@ -182,6 +171,9 @@ function App() {
           <div className="button-space" />
           <button onClick={() => add_Q("MCMA")} className="add-question-button"> Add MCMA</button>
         </div>
+        {/* <div className='save-questions-wrapper'>
+          <button onClick={()=> sumPoints()}>Save Quiz</button>
+        </div> */}
       </div>
     );
   }// quiz_content()
@@ -202,10 +194,17 @@ function App() {
 
 
   function PDFThing() {
-    return (
-      <button className='to-pdf-button' onClick={()=>{sumPoints(); genPDF(quiz_questions, total_points);}}> Convert Quiz to PDF!</button>
-    );
+    return (<div className='pdf-wrapper'>
+      <button className='to-pdf-button' onClick={()=>{
+          pdfWrap();}}> Convert Quiz to PDF!</button>
+      </div>);
   }// PDFThing()
+  
+  function pdfWrap(){
+    // sumPoints();
+    // SaveInputVals();
+    genPDF(quiz_questions);
+  }
 
   function ImportantNote() {
     return (

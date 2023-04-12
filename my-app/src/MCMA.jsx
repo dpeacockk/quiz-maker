@@ -4,7 +4,7 @@ import './index.css';
 export default function MCMA({ id, content }) {
 
     return (
-        <div className="quiz-mcq-wrapper">
+        <div className="quiz-mcq-wrapper" id={`${id}`} type="MCMA">
             <div className='mcma-defining-title'>
                 <p className='mcma-header'>Multiple Choice Multiple Answer Question</p>
             </div>
